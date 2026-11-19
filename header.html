@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dvolt</title>
+    <link rel="icon" href="dvolt_fawicon.png">
+    <style>
+      /* Сброс базовых стилей */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      /* Шапка */
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+        margin-bottom: 24px;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .logo {
+        flex: 0 0 auto;
+        width: 200px;
+      }
+
+      .logo img {
+        width: 200px;
+        height: 57px;
+        display: block;
+      }
+
+      /* Навигация */
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-menu > li {
+        position: relative;
+      }
+
+      .nav-menu > li > a {
+        display: block;
+        padding: 8px 16px;
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        white-space: nowrap;
+      }
+
+      .nav-menu > li > a:hover {
+        color: #0d6efd;
+      }
+
+      .nav-menu > li > a.active {
+        color: #0d6efd;
+      }
+
+      /* Выпадающее меню - исправлено */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 220px;
+        padding: 8px 0;
+        margin-top: 2px;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        list-style: none;
+        z-index: 1000;
+      }
+
+      /* КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: показываем меню при наведении на родительский элемент */
+      .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+      /* ДОПОЛНИТЕЛЬНО: чтобы меню не исчезало при наведении на сам dropdown */
+      .dropdown-menu:hover {
+        display: block;
+      }
+
+      .dropdown-menu li a {
+        display: block;
+        padding: 8px 20px;
+        color: #212529;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background 0.15s;
+      }
+
+      .dropdown-menu li a:hover {
+        background: #e9ecef;
+      }
+
+      .dropdown-divider {
+        height: 1px;
+        margin: 8px 0;
+        background: #e9ecef;
+        border: none;
+      }
+
+      /* Кнопка выхода */
+      .btn-logout {
+        padding: 8px 20px;
+        color: #0d6efd;
+        background: transparent;
+        border: 1px solid #0d6efd;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+
+      .btn-logout:hover {
+        color: #fff;
+        background: #0d6efd;
+      }
+
+      /* Адаптивность */
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .logo {
+          width: auto;
+        }
+
+        .nav-menu {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 4px;
+          width: 100%;
+        }
+
+        .nav-menu > li > a {
+          padding: 6px 12px;
+          font-size: 14px;
+        }
+
+        /* На мобильных меню становится статичным */
+        .dropdown-menu {
+          position: static;
+          box-shadow: none;
+          border: 1px solid #dee2e6;
+          margin-top: 2px;
+          min-width: 100%;
+        }
+
+        .dropdown:hover .dropdown-menu {
+          display: none;
+        }
+
+        .dropdown-menu:hover {
+          display: none;
+        }
+
+        .dropdown-menu.show {
+          display: block !important;
+        }
+
+        .btn-logout {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+		<?php 
+
+$servername = "localhost";
+			$username = "root";
+			$password = "";
+			$dbname = "proba";
+
+			// Create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			// Check connection
+			if ($conn->connect_error) {
+			  die("Connection failed: " . $conn->connect_error);
+			}
+$conn->set_charset("utf8mb4");
+			//$conn->close();
+	?>
+  </head>
+<body>
+
+<div class="container">
+  <header>
+
+    <!-- Логотип -->
+    <div class="logo">
+      <a href="/">
+        <img src="dvolt_logo1.png" alt="Логотип Dvolt">
+      </a>
+    </div>
+
+    <!-- Навигационное меню -->
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#" class="active">Главная</a></li>
+
+      <!-- Пункт с выпадающим меню -->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" id="dropdownToggle">
+          Новая заявка ▾
+        </a>
+        <ul class="dropdown-menu" id="dropdownMenu">
+		
+			<?php
+				$sql = "SELECT * FROM device";
+				$result = $conn->query($sql);
+				while ($row = $result->fetch_assoc()) {
+					echo "<li><a href='test.php' id='".$row["deviceAbr"]."' value='".$row["deviceAbr"]."'>".$row["deviceName"]."</a></li>";
+				}
+			?>
+			
+       <!--   <li><a href="#">Действие</a></li>
+          <li><a href="#">Другое действие</a></li>
+          <li><a href="#">Что-то ещё</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a href="#">Отдельная ссылка</a></li> -->
+        </ul>
+      </li>
+
+      <li><a href="#">Просмотр заявок</a></li>
+      <li><a href="#">Прайс</a></li>
+      <li><a href="#">Поиск</a></li>
+    </ul>
+
+    <!-- Кнопка выхода -->
+    <button class="btn-logout">Выход</button>
+
+  </header>
+</div>
+
+<!-- Скрипт для работы на мобильных устройствах -->
+<script>
+  (function() {
+    const dropdownToggle = document.getElementById('dropdownToggle');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const dropdown = document.querySelector('.dropdown');
+
+    // Функция для проверки мобильного устройства
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    // Обработчик клика для мобильных
+    if (dropdownToggle && dropdownMenu) {
+      dropdownToggle.addEventListener('click', function(e) {
+        if (isMobile()) {
+          e.preventDefault();
+          dropdownMenu.classList.toggle('show');
+        }
+      });
+
+      // Закрываем меню при клике вне его на мобильных
+      document.addEventListener('click', function(e) {
+        if (isMobile() && dropdown && !dropdown.contains(e.target)) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    }
+
+    // При изменении размера окна скрываем меню, если оно было открыто
+    window.addEventListener('resize', function() {
+      if (!isMobile() && dropdownMenu) {
+        dropdownMenu.classList.remove('show');
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
