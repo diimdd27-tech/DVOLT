@@ -1,0 +1,36 @@
+CREATE TABLE usersTbl (usersId INT NOT NULL PRIMARY KEY AUTO_INCREMENT, usersLogin VARCHAR(15) NOT NULL UNIQUE, usersPwd VARCHAR NOT NULL);
+
+CREATE TABLE clientTbl (clientId INT NOT NULL PRIMARY KEY AUTO_INCREMENT, firstName VARCHAR(20) NOT NULL, secondName VARCHAR(20) NOT NULL, lastName VARCHAR(20) NOT NULL, phoneNum VARCHAR(20) NOT NULL);
+INSERT INTO clientTbl VARCHAR ('firstName', 'secondName', 'lastName', 'phoneNum') VALUES ('', '', '', '');
+
+CREATE TABLE typeTbl(typeID INT NOT NULL AUTO_INCREMENT, abrType VARCHAR(2) NOT NULL, typeName varchar(20) NOT NULL);
+
+CREATE TABLE statusTbl (statusId INT NOT NULL PRIMARY KEY AUTO_INCREMENT, status VARCHAR(10) NOT NULL, bgColor VARCHAR(7) NOT NULL);
+ INSERT INTO statusTbl(status, bgColor) VALUES ('Новый', '#32CD32'), ('В работе', '#FFD700'), ('Завершен', '#00CED1'), ('Выдан', '#708090');
+
+CREATE TABLE orderTbl (orderId INT NOT NULL PRIMARY KEY AUTO_INCREMENT, orderNum VARCHAR(20) NOT NULL, openDt DATETIME DEFAULT CURRENT_DATETIME NOT NULL, closeDt DATETIME, returnDt DATETIME, 
+  statusId INT, clientId INT, FOREIGN KEY (statusId) REFERENCES statusTbl(statusId), FOREIGN KEY (clientId) REFERENCES clientTbl(clientId));
+
+
+
+ 
+ 
+ 
+ 
+
+
+create table type(typeID INT NOT NULL AUTO_INCREMENT, brandId INT NOT NULL, typeName varchar(20), PRIMARY KEY (typeID));
+INSERT INTO type VALUES ('Notebook');
+INSERT INTO type VALUES ('PC');
+INSERT INTO type VALUES ('Smart Phone');
+create table brand(brandId int NOT NULL AUTO_INCREMENT PRIMARY KEY, brandName varchar(20));
+INSERT INTO brand VALUES (1, 'Samsung');
+ALTER TABLE type ADD brandId INT NOT NULL;
+
+
+=======================================================
+
+CREATE TABLE brandTbl (idBrand INT NOT NULL AUTO_INCREMENT, nameBrand VARCHAR(15) NOT NULL, PRIMARY KEY (idBrand));
+CREATE TABLE brandTbl (idBrand INT NOT NULL AUTO_INCREMENT, nameBrand VARCHAR(15) NOT NULL, PRIMARY KEY (idBrand));
+CREATE TABLE deviceTbl (idDevice INT NOT NULL AUTO_INCREMENT, modelDevice VARCHAR(15) NOT NULL, 
+					PRIMARY KEY (idDevice), FOREIGN KEY(idBrand) PREFERENCES );
